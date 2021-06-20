@@ -1,10 +1,9 @@
 <template>
 
 <div id="container">
-
-     <ul  v-for="(color, index) in colors" :key="color.id">
-         <Square v-if="!hasWon"  :color="colors[index]" :pickedColor="pickedColor" :changeColors="changeColors" :getMessage="getMessage" />
-         <Square v-else  :color="pickedColor" :pickedColor="pickedColor" :getMessage="getMessage" />
+     <ul  v-for="(color, index) in $store.state.colors" :key="color.id">
+         <Square v-if="hasWon"  :color="$store.state.pickedColor" :i="index" />
+         <Square v-else  :color="$store.state.colors[index]" :i="index" />
     </ul>   
 </div>
 
@@ -16,12 +15,6 @@
     name: 'Container',
     components:{ 
         Square
-    },
-    props: {
-        colors: Array,
-        pickedColor: String,
-        getMessage: Function,
-        hasWon: Function,
     },
     mounted () {
 

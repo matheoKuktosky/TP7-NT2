@@ -1,7 +1,7 @@
 <template>
-	<div id="header" :style="{ background: hasWon ?pickedColor : bgColor  }">
+	<div id="header" :style="{ background: hasWon ? $store.state.pickedColor : 'steelblue'  }">
 		<h1>The Great <br>
-			<span id="colorDisplay">{{pickedColor}} </span>
+			<span id="colorDisplay">{{ $store.state.pickedColor}} </span>
 			<br>
 			Guessing Game</h1>
 	</div>
@@ -10,26 +10,6 @@
 <script>
 export default {
   name: 'JuegoColores',
-  props: {
-      pickedColor: String,
-      hasWon: Function,
-  },
-  mounted () {
-    },
-    data () {
-      return {
-          bgColor: ""
-
-      }
-    },
-    methods: {
-        restart(){
-            this.bgColor = "steelblue"
-        }
-    },
-    computed: {
-
-    }
 }
 </script>
 

@@ -2,10 +2,10 @@
 
   <div id="navigator">
 		<button id="reset" v-on:click="reset"> {{ getResetBtnTxt }} </button>
-		<span id="message"> {{ message }} </span>
+		<span id="message"> {{ $store.state.message }} </span>
 
-		<button id="easy" v-on:click="handleDificultyChanged(false)" :class="!isHard ? 'selected' : ''">easy</button>
-		<button id="hard" v-on:click="handleDificultyChanged(true)" :class="isHard ? 'selected' : ''">hard</button>
+		<button id="easy" v-on:click="handleDificultyChanged(false)" :class="!$store.state.isHard ? 'selected' : ''">easy</button>
+		<button id="hard" v-on:click="handleDificultyChanged(true)" :class="$store.state.isHard ? 'selected' : ''">hard</button>
 	</div>
 
 </template>
@@ -14,29 +14,23 @@
 
   export default  {
     name: 'Navigator',
-    props: {
-        message: String,
-		restart: Function,
-    },
     data () {
       return {
-		isHard: true
       }
     },
     methods: {
 		handleDificultyChanged(isHard){
-			if(this.isHard !== isHard){
-				this.isHard = isHard
-				this.restart(isHard)
+			if(this.$store.state.isHard !== isHard){
+				this.$store.dispatch('restart', isHard)
 			}
 		},
 		reset(){
-			this.restart(this.isHard)
+			this.$store.dispatch('restart', this.$store.state.isHard)
 		}
     },
     computed: {
         getResetBtnTxt: function () {
-            return this.message === 'You Picked Right!' ? 'Play Again!' : 'New colors!'  
+            return this.$store.state.message === 'You Picked Right!' ? 'Play Again!' : 'New colors!'  
         }
     }
 }

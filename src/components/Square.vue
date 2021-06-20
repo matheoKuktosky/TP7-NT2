@@ -1,5 +1,5 @@
 <template>
-    <div class="square" :style="{ background: color }" v-on:click="handleClick(color)">
+    <div class="square" :style="{ background: color }" v-on:click="handleClick">
 
     </div>
 </template>
@@ -10,29 +10,28 @@
     name: 'Square',
     props: {
         color: String,
-        pickedColor: String,
-        getMessage: Function,
+        i: Number,
     },
     mounted () {
     },
     data () {
       return {
-
       }
     },
     methods: {
-        handleClick(color){            
-            if(color === this.pickedColor){
-                this.getMessage('You Picked Right!')
+        handleClick(){ 
+            if(this.color === this.$store.state.pickedColor){
+                 this.$store.dispatch('setMessage', 'You Picked Right!')
+                 this.$store.dispatch('changeColors')
             }
             else{
                 this.color = "#232323"
-                this.getMessage('Try Again!')
+                this.$store.dispatch('setMessage', 'Try Again!')
+                this.$store.dispatch('changeColor', this.i, "#232323")
             }
         },
     },
     computed: {
-
     }
 }
 

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header :pickedColor="pickedColor" :hasWon="hasWon"/>
-    <Navigator :message="message" :restart="restart"/>
-    <Container :colors="colors" :pickedColor="pickedColor" :hasWon="hasWon" :getMessage="getMessage"/>
+    <Header/>
+    <Navigator/>
+    <Container/>
   </div>
 </template>
 
@@ -19,62 +19,14 @@ export default {
     Container,    
   },
   mounted () {
-    this.restart(true)
+    this.$store.dispatch('restart', true)
   },
   data() {
     return{
-        colorCount : 6,
-        isHard : true,
-        colors : [],
-        pickedColor : '',
-        message: '',
     }
   },
   methods: {
-    randomInt(){
-      return Math.floor(Math.random() * 256);
-    },
-
-    createRandomStringColor(){
-      let newColor = "rgb(" + this.randomInt() + ", " + this.randomInt() + ", " + this.randomInt() + ")" 
-      return newColor
-    },
-
-    PickColor(){
-      let quantity
-      if (this.isHard) {
-        quantity = 6
-      } else {
-        quantity = 3
-      }
-      return Math.floor(Math.random() * quantity )
-    },
-
-    createNewColors(numbers){
-      let arr = []
-      for (let i = 0; i < numbers; i++) {
-        arr.push(this.createRandomStringColor())
-      }
-        return arr
-    },
-
-    restart(hardDificulty){
-        this.isHard = hardDificulty
-        this.colorCount = hardDificulty ? 6 : 3
-        this.colors = this.createNewColors(this.colorCount)
-        this.pickedColor = this.colors[this.PickColor()]
-        this.message = ''
-      },
-
-    getMessage(message) {
-        return this.message = message
-    }    
   },
-  computed: {
-    hasWon: function () {
-      return this.message === 'You Picked Right!'
-    }
-  }
 
 }
 </script>
